@@ -239,14 +239,6 @@ export default function Admin() {
                   })
                 }
               />
-              {editingQuestion.type === "drag_drop" && (
-                <p
-                  style={{ fontSize: "0.7rem", color: "blue", margin: "5px 0" }}
-                >
-                  * Koristite <b>____</b> (4 donje crte) na mjestu gdje treba
-                  biti rupa za odgovor.
-                </p>
-              )}
               <select
                 value={editingQuestion.type}
                 onChange={(e) =>
@@ -279,9 +271,7 @@ export default function Admin() {
                   onChange={(e) =>
                     setEditingQuestion({
                       ...editingQuestion,
-                      options: e.target.value
-                        .split(",")
-                        .map((opt) => opt.trim()),
+                      options: e.target.value.split(","),
                     })
                   }
                 />
@@ -309,7 +299,6 @@ export default function Admin() {
                   Edit
                 </button>
                 <button
-                  class="logout"
                   onClick={() => deleteQuestion(q.id)}
                   style={{ marginLeft: "0.5rem" }}
                 >

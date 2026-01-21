@@ -88,7 +88,7 @@ export default function Game() {
       <h2>
         Pitanje {currentIndex + 1}/{questions.length}
       </h2>
-      <p>{current.question}</p>
+      {current.type !== "drag_drop" && <p>{current.question}</p>}
 
       {(current.type === "text_input" || current.type === "fill_blank") && (
         <input
@@ -99,50 +99,113 @@ export default function Game() {
       )}
 
       {current.type === "multiple_choice" && (
-        <div>
-          {JSON.parse(current.options).map((opt, i) => (
-            <button key={i} onClick={() => setUserAnswer(opt)}>
-              {opt}
-            </button>
-          ))}
+        <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+          {JSON.parse(current.options).map((opt, i) => {
+            // Provjeravamo je li ovo dugme ono koje je korisnik kliknuo
+            const isSelected = userAnswer === opt;
+
+            return (
+              <button
+                key={i}
+                onClick={() => setUserAnswer(opt)}
+                style={{
+                  padding: "10px 20px",
+                  boxShadow: "0 2px 4px rgba(0, 0, 0, 0.33)",
+                  cursor: "pointer",
+                  backgroundColor: isSelected
+                    ? "#2196f3"
+                    : "rgba(240, 240, 240, 0)",
+                  //color: isSelected ? "white" : "black",
+                  color: "white",
+                  borderRadius: "5px",
+                  transition: "all 0.2s ease", // Da promjena boje bude glatka
+                }}
+              >
+                {opt}
+              </button>
+            );
+          })}
         </div>
       )}
 
       {current.type === "drag_drop" && (
-        <>
-          <div style={{ display: "flex", gap: "1rem", marginBottom: "1rem" }}>
-            {JSON.parse(current.options).map((opt, i) => (
-              <div
-                key={i}
-                draggable
-                onDragStart={(e) => e.dataTransfer.setData("text", opt)}
-                style={{
-                  padding: "0.5rem 1rem",
-                  border: "1px solid black",
-                  cursor: "grab",
-                }}
-              >
-                {opt}
-              </div>
+        <div style={{ marginBottom: "2rem" }}>
+          {/* REČENICA S DROP ZONOM */}
+          <div>
+            {current.question.split("____").map((part, index, array) => (
+              <span key={index}>
+                {part}
+                {index < array.length - 1 && (
+                  <span
+                    onDrop={(e) => {
+                      e.preventDefault();
+                      const droppedValue = e.dataTransfer.getData("text");
+                      setUserAnswer(droppedValue);
+                    }}
+                    onDragOver={(e) => e.preventDefault()}
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      minWidth: "120px",
+                      height: "40px",
+                      borderBottom: "3px solid #333",
+                      margin: "0 10px",
+                      backgroundColor: userAnswer
+                        ? "rgba(227, 242, 253, 0)"
+                        : "rgba(245, 245, 245, 0)",
+                      borderRadius: "4px",
+                      verticalAlign: "middle",
+                      cursor: "pointer",
+                      transition: "all 0.2s",
+                    }}
+                    onClick={() => setUserAnswer("")} // Klik na rupu vraća odgovor nazad
+                    title="Klikni za uklanjanje"
+                  >
+                    {userAnswer || "povuci ovdje"}
+                  </span>
+                )}
+              </span>
             ))}
           </div>
 
+          {/* DOSTUPNE OPCIJE (Prikazuju se samo one koje NISU odabrane) */}
           <div
-            onDrop={(e) => {
-              e.preventDefault();
-              setUserAnswer(e.dataTransfer.getData("text"));
-            }}
-            onDragOver={(e) => e.preventDefault()}
             style={{
-              padding: "1rem",
-              border: "2px dashed black",
-              minHeight: "40px",
-              textAlign: "center",
+              display: "flex",
+              gap: "1rem",
+              flexWrap: "wrap",
+              marginTop: "1rem",
             }}
           >
-            {userAnswer || "Drop ovdje"}
+            {JSON.parse(current.options)
+              .filter((opt) => opt !== userAnswer) // Sakrij opciju ako je već u rečenici
+              .map((opt, i) => (
+                <div
+                  key={i}
+                  draggable
+                  onDragStart={(e) => e.dataTransfer.setData("text", opt)}
+                  style={{
+                    padding: "0.8rem 1.2rem",
+                    border: "2px solid rgba(33, 149, 243, 0)",
+                    borderRadius: "8px",
+                    backgroundColor: "rgba(245, 245, 245, 0)",
+                    cursor: "grab",
+                    fontWeight: "bold",
+                    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.33)",
+                  }}
+                >
+                  {opt}
+                </div>
+              ))}
           </div>
-        </>
+
+          {userAnswer && (
+            <p style={{ fontSize: "0.8rem", color: "gray", marginTop: "10px" }}>
+              * Klikni na riječ u rečenici ako je želiš maknuti.
+            </p>
+          )}
+        </div>
       )}
 
       <br />
@@ -156,6 +219,7 @@ export default function Game() {
       )}
 
       <button
+        class="logout"
         onClick={() => navigate("/")}
         style={{ marginTop: "1rem", marginLeft: "1rem" }}
       >

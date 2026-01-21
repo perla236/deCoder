@@ -39,3 +39,49 @@ hr {
   margin: 20px 0;
   border: 1px solid #555;
 }
+
+#root {
+  display: grid;
+  place-items: center; /* Centrira sve i horizontalno i vertikalno */
+  min-height: 100vh; /* Da bi se vidjelo vertikalno centriranje */
+}
+
+.logout {
+  background: #bf1414;
+}
+
+.logout:hover {
+  background: #a11111;
+}
+
+/* Opcionalno: malo povećanje ili promjena boje na hover */
+.hideShow:hover {
+  transform: scale(1.1);
+  color: #555;
+}
+
+.passwordWrapper {
+  position: relative;
+  width: 270px; /* ili 100% */
+}
+.username {
+  position: relative;
+  width: 250px; /* ili 100% */
+}
+
+.passwordWrapper input {
+  width: 100%;
+  padding: 10px 40px 10px 10px;
+  box-sizing: border-box;
+}
+
+.hideShow {
+  position: absolute;
+  right: 10px;
+  top: 20%;
+  transition: transform 0.2s ease; /* Blagi efekt na hover */
+  cursor: pointer;
+  font-size: 18px;
+  opacity: 1;
+  color: #000000;
+}

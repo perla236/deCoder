@@ -39,7 +39,7 @@ export default function Dashboard() {
   return (
     <div className="container" style={{ padding: "2rem" }}>
       <h1>Dobrodošli, {username}!</h1>
-      <p>Vaš najbolji rezultat: {highscore} poena</p>
+      <p>Vaš najbolji rezultat: {highscore} bodova</p>
 
       <div style={{ margin: "1rem 0" }}>
         <button
@@ -62,7 +62,9 @@ export default function Dashboard() {
           💬 Chat
         </button>
 
-        <button onClick={handleLogout}>Logout</button>
+        <button class="logout" onClick={handleLogout}>
+          Logout
+        </button>
       </div>
     </div>
   );

@@ -62,36 +62,48 @@ export default function Register() {
     <div className="container">
       <h2>Register</h2>
       <input
+        class="username"
         placeholder="Username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
       <br />
       <input
+        class="username"
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
       <br />
-      <input
-        type={showPassword ? "text" : "password"}
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button onClick={() => setShowPassword(!showPassword)}>
-        {showPassword ? "Sakrij" : "Prikaži"} lozinku
-      </button>
-      <br />
-      <input
-        type={showConfirm ? "text" : "password"}
-        placeholder="Ponovi password"
-        value={confirmPassword}
-        onChange={(e) => setConfirmPassword(e.target.value)}
-      />
-      <button onClick={() => setShowConfirm(!showConfirm)}>
-        {showConfirm ? "Sakrij" : "Prikaži"} lozinku
-      </button>
+      <div className="passwordWrapper">
+        <input
+          type={showPassword ? "text" : "password"}
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
+        <span
+          class="hideShow"
+          onClick={() => setShowPassword(!showPassword)}
+          role="button"
+          tabIndex="0"
+        >
+          {showPassword ? "⌣" : "👁"}
+        </span>
+      </div>
+
+      <div className="passwordWrapper">
+        <input
+          type={showConfirm ? "text" : "password"}
+          placeholder="Ponovi password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+        />
+        <span class="hideShow" onClick={() => setShowConfirm(!showConfirm)}>
+          {showConfirm ? "⌣" : "👁"}
+        </span>
+      </div>
       <br />
       <button onClick={handleRegister}>Register</button>
       <br />

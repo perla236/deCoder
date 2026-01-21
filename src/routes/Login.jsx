@@ -42,21 +42,31 @@ export default function Login() {
     <div className="container">
       <h2>Login</h2>
       <input
+        class="username"
         placeholder="Username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
       <br />
-      <input
-        type={showPassword ? "text" : "password"}
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+      <div className="passwordWrapper">
+        <input
+          type={showPassword ? "text" : "password"}
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
+        <span
+          class="hideShow"
+          onClick={() => setShowPassword(!showPassword)}
+          role="button"
+          tabIndex="0"
+        >
+          {showPassword ? "⌣" : "👁"}
+        </span>
+      </div>
       <br />
-      <button onClick={() => setShowPassword(!showPassword)}>
-        {showPassword ? "Sakrij" : "Prikaži"} lozinku
-      </button>
+
       <br />
       <button onClick={handleLogin}>Login</button>
       <br />

@@ -24,7 +24,7 @@ export default function Leaderboard() {
       <ol>
         {leaders.map((l, i) => (
           <li key={i}>
-            {l.username} - {l.highscore} poena
+            {l.username} - {l.highscore} bodova
           </li>
         ))}
       </ol>

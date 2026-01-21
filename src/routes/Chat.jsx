@@ -79,7 +79,7 @@ export default function Chat() {
     const [hour, minute, second] = timePart.split(":").map(Number);
 
     // kreiramo Date objekt
-    const date = new Date(year, month - 1, day, hour + 2, minute, second);
+    const date = new Date(year, month - 1, day, hour + 1, minute, second);
 
     return date.toLocaleString("hr-HR", {
       day: "2-digit",
